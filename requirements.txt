@@ -1,1 +1,1 @@
-streamlit
+streamlitpandasstreamlit_option_menubase64numpyjoblib
