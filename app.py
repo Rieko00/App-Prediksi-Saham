@@ -4,6 +4,7 @@ from streamlit_option_menu import option_menu
 import base64
 import numpy as np
 from joblib import dump, load
+from sklearn.preprocessing import MinMaxScaler
 
 
 with st.sidebar:
@@ -17,16 +18,15 @@ with st.sidebar:
 
 if selected == 'DATASET':
     st.write("# DATASET")
-    st.write("Pada halaman ini akan berisi tentang Informasi Dataset yang digunakan. Mulai dari banyak dataset, visual datasetm analisis korelasi ACF, dan analisis korelasi PACF.")
+    st.write("Pada halaman ini akan berisi tentang Informasi Dataset yang digunakan.")
     dataset, visual = st.tabs(["Data", "Visualisasi",])
 
     with dataset:
         st.markdown(
             '<p style="text-align: justify;">'
-            'Data Inflasi diambil dari data historis Web Bank Indonesia. Pengamatan data inflasi Indonesia ini mencakup '
-            '<span class="highlight">tanggal 01-01-2003 hingga 01-05-2024</span>. '
-            'Data ini dikumpulkan dan dipublikasikan oleh Bank Indonesia sebagai bagian dari upaya mereka untuk '
-            'memantau dan mengelola stabilitas ekonomi negara.'
+            'Data Saham diambil dari data historis saham Bank Mandiri (BMRI). Pengamatan data data saham ini mencakup '
+            '<span class="highlight">tanggal 01-01-2019 hingga 10-11-2024</span>. '
+            'Data ini dikumpulkan dan dipublikasikan oleh website investing.com'
             '</p>',
             unsafe_allow_html=True
         )
@@ -49,14 +49,14 @@ if selected == 'DATASET':
         st.image('data/bmri.png')
         st.markdown(
             '<p style="text-align: justify;">'
-            'Grafik data terlihat berfluktuasi seiring waktu. dimana lonjakan Inflasi tertinggi terjadi pada tahun 2005 hingga 2006.'
+            'Grafik data terlihat berfluktuasi seiring waktu. dimana pada tahun 2020-2021 terjadi fluktuasi yang cukup signifikan.'
             '</p>',
             unsafe_allow_html=True
         )
         st.image('data/bmri_outlier.png')
         st.markdown(
             '<p style="text-align: justify;">'
-            'Grafik data terlihat berfluktuasi seiring waktu. dimana lonjakan Inflasi tertinggi terjadi pada tahun 2005 hingga 2006.'
+            'Grafik data box plot'
             '</p>',
             unsafe_allow_html=True
         )
@@ -72,12 +72,12 @@ if selected == 'MODELING':
 
         histori,visual = st.tabs(['Histori','Visual'])
         with histori:
-            st.write('Pada skenario 1 digunakan pembagian dataset dengan rasio 80:20.')
+            st.write('Skenario bagging linear regression')
 
-            st.info("#### Histori dari skenario 1")
+            st.info("#### Histori dari skenario bagging linear regression")
             st.markdown(
                 '<p style="text-align: justify;">'
-                'Untuk histori pembuatan model skenario 1 dapat dilihat dibawah ini. Record yang disimpan merupakan pengujian dari kombinasi parameter yang mencapai <span class="highlight"> 648 Iterasi.</span>'
+                'Untuk histori pembuatan model skenario dapat dilihat dibawah ini. Record yang disimpan merupakan pengujian dari kombinasi parameter yang mencapai <span class="highlight"> 359 Iterasi.</span>'
                 '</p>',
                 unsafe_allow_html=True
             )
@@ -94,13 +94,13 @@ if selected == 'MODELING':
             st.dataframe(dfhistory_lr.iloc[idmin,1:7], use_container_width=True)
 
             st.info("##### Hasil Nilai Error Terendah:")
-            st.write(f"Nilai RMSE : {round(dfhistory_lr['RMSE'].min(), 7)} %")
+            st.write(f"Nilai RMSE : {round(dfhistory_lr['RMSE'].min(), 7)}")
 
         with visual:
             st.info("##### Visualisasi grafik")
             st.markdown(
                 '<p style="text-align: justify;">'
-                'Hasil peramalan dalam pengujian yang didapatkan akan dituangkan dalam grafik dan tabel berikut.</span>'
+                'Hasil prediksi dalam pengujian yang didapatkan akan dituangkan dalam grafik dan tabel berikut.</span>'
                 '</p>',
                 unsafe_allow_html=True
             )
@@ -118,12 +118,12 @@ if selected == 'MODELING':
 
         histori,visual = st.tabs(['Histori','Visual'])
         with histori:
-            st.write('Pada skenario 1 digunakan pembagian dataset dengan rasio 80:20.')
+            st.write('Skenario bagging SVM')
 
-            st.info("#### Histori dari skenario 1")
+            st.info("#### Histori dari skenario bagging SVM")
             st.markdown(
                 '<p style="text-align: justify;">'
-                'Untuk histori pembuatan model skenario 1 dapat dilihat dibawah ini. Record yang disimpan merupakan pengujian dari kombinasi parameter yang mencapai <span class="highlight"> 648 Iterasi.</span>'
+                'Untuk histori pembuatan model skenario dapat dilihat dibawah ini. Record yang disimpan merupakan pengujian dari kombinasi parameter yang mencapai <span class="highlight"> 191 Iterasi.</span>'
                 '</p>',
                 unsafe_allow_html=True
             )
@@ -140,13 +140,13 @@ if selected == 'MODELING':
             st.dataframe(dfhistory_svm.iloc[idmin,0:10], use_container_width=True)
 
             st.info("##### Hasil Nilai Error Terendah:")
-            st.write(f"Nilai RMSE : {round(dfhistory_svm['RMSE'].min(), 7)} %")
+            st.write(f"Nilai RMSE : {round(dfhistory_svm['RMSE'].min(), 7)}")
 
         with visual:
             st.info("##### Visualisasi grafik")
             st.markdown(
                 '<p style="text-align: justify;">'
-                'Hasil peramalan dalam pengujian yang didapatkan akan dituangkan dalam grafik dan tabel berikut.</span>'
+                'Hasil prediksi dalam pengujian yang didapatkan akan dituangkan dalam grafik dan tabel berikut.</span>'
                 '</p>',
                 unsafe_allow_html=True
             )
@@ -162,12 +162,12 @@ if selected == 'MODELING':
 
         histori,visual = st.tabs(['Histori','Visual'])
         with histori:
-            st.write('Pada skenario 1 digunakan pembagian dataset dengan rasio 80:20.')
+            st.write('Skenario Bagging Random Forest')
 
-            st.info("#### Histori dari skenario 1")
+            st.info("#### Histori dari skenario Bagging Random Forest")
             st.markdown(
                 '<p style="text-align: justify;">'
-                'Untuk histori pembuatan model skenario 1 dapat dilihat dibawah ini. Record yang disimpan merupakan pengujian dari kombinasi parameter yang mencapai <span class="highlight"> 648 Iterasi.</span>'
+                'Untuk histori pembuatan model skenario dapat dilihat dibawah ini. Record yang disimpan merupakan pengujian dari kombinasi parameter yang mencapai <span class="highlight"> 575 Iterasi.</span>'
                 '</p>',
                 unsafe_allow_html=True
             )
@@ -184,13 +184,13 @@ if selected == 'MODELING':
             st.dataframe(dfhistory_rf.iloc[idmin,1:8], use_container_width=True)
 
             st.info("##### Hasil Nilai Error Terendah:")
-            st.write(f"Nilai RMSE : {round(dfhistory_rf['RMSE'].min(), 7)} %")
+            st.write(f"Nilai RMSE : {round(dfhistory_rf['RMSE'].min(), 7)}")
 
         with visual:
             st.info("##### Visualisasi grafik")
             st.markdown(
                 '<p style="text-align: justify;">'
-                'Hasil peramalan dalam pengujian yang didapatkan akan dituangkan dalam grafik dan tabel berikut.</span>'
+                'Hasil prediksi dalam pengujian yang didapatkan akan dituangkan dalam grafik dan tabel berikut.</span>'
                 '</p>',
                 unsafe_allow_html=True
             )
@@ -198,3 +198,38 @@ if selected == 'MODELING':
 
             st.info("##### Tabel Aktual dan Prediksi")
             st.dataframe(prediksi_rf, use_container_width=True)
+
+if selected == 'PREDIKSI':
+    svm_model = load('data/model_svm.pkl')
+
+    st.write("# Peramalan Inflasi")
+    st.warning("###### Remainder")
+    st.write("Pada halaman ini anda akan melakukan peramalan Inflasi dengan data masukan berupa Inflasi dari waktu sebelumnya. untuk informasi mengenai data Inflasi dapat melihat pada Menu BI dan memilih data histori Inflasi.")
+
+    st.info("Masukkan Data Inflasi")
+
+    col1,col2 = st.columns(2)
+    with col1:
+        t1 = st.number_input("Masukkan harga saham saat ini")
+    with col2:
+        t2 = st.number_input("Masukkan harga saham 1 hari sebelumnya")
+    t3 = st.number_input("Masukkan harga saham 2 hari sebelumnya")
+
+    if st.button("Predict"):
+        newdata = np.array([t1, t2, t3])
+        scaler = MinMaxScaler()
+        normnewdata = scaler.fit_transform(newdata.reshape(-1, 1))
+        prediksi = svm_model.predict(normnewdata.reshape(1,-1))
+        denormpredict = scaler.inverse_transform(prediksi.reshape(-1,1))
+
+        percentage_change = ((denormpredict[0][0] - t1) / t1) * 100
+        change_sign = '+' if percentage_change > 0 else ''
+
+        st.write(f"Hasil peramalan saham besok: ")
+        # st.success(f"{round(denormpredict[0,0],2)}%")
+        st.success(f'Prediksi harga BMRI Besok: Rp {round(denormpredict[0,0],2)} ({change_sign}{percentage_change:.2f}%)')
+
+        if st.button("Reset"):
+            t1 = 0
+            t2 = 0
+            t3 = 0
