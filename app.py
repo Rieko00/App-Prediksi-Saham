@@ -3,7 +3,7 @@ import pandas as pd
 from streamlit_option_menu import option_menu
 import base64
 import numpy as np
-import joblib
+from joblib import dump, load
 
 
 with st.sidebar:
@@ -113,7 +113,7 @@ if selected == 'MODELING':
 
     with svm:
         prediksi_svm = pd.read_excel("data/predict_svm.xlsx")
-        history_svm = pd.read_excel("data/SVM_history.xlsx")
+        history_svm = pd.read_excel("data/svm_history.xlsx")
         dfhistory_svm = pd.DataFrame(history_svm)
 
         histori,visual = st.tabs(['Histori','Visual'])
