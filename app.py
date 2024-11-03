@@ -200,7 +200,7 @@ if selected == 'MODELING':
             st.dataframe(prediksi_rf, use_container_width=True)
 
 if selected == 'PREDIKSI':
-    svm_model = load('data/model_svm.pkl')
+    svm_model = load('data/model_SVM.pkl')
 
     st.write("# Peramalan Inflasi")
     st.warning("###### Remainder")
