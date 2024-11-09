@@ -16,6 +16,28 @@ with st.sidebar:
         default_index=0,  # optional
     )
 
+if selected == 'HOME':
+    st.write("# HOME")
+    st.markdown(
+        '<p style="text-align: justify;">'
+        'Investasi saham telah menjadi salah satu instrumen yang populer di kalangan masyarakat, baik di Indonesia maupun secara global. Saham PT Bank Mandiri Tbk (BMRI) merupakan salah satu saham perbankan yang paling diminati oleh para investor karena kestabilannya dan prospek pertumbuhannya yang positif dalam jangka panjang. Namun, fluktuasi harga saham yang tidak dapat diprediksi menjadi tantangan bagi para investor, terutama yang menggunakan strategi jangka pendek. Dengan semakin berkembangnya teknologi dan ketersediaan data, metode prediksi harga saham berbasis sains data semakin relevan untuk memberikan panduan yang lebih baik dalam pengambilan keputusan investasi.'
+        '</p>',
+        unsafe_allow_html=True
+    )
+    st.image("data/chart.webp")
+    st.markdown(
+        '<p style="text-align: justify;">'
+        'Aplikasi ini dibuat untuk memprediksi harga saham Bank Mandiri (BMRI) menggunakan metode Bagging. '
+        'Pada aplikasi ini terdapat beberapa halaman yang dapat diakses, yaitu:'
+        '<ul>'
+        '<li>Dataset : Berisi informasi tentang dataset yang digunakan.</li>'
+        '<li>Modelling : Berisi informasi tentang hasil modelling yang dilakukan.</li>'
+        '<li>Prediksi : Berisi informasi tentang hasil prediksi harga saham</li>'
+        '</ul>'
+        '</p>',
+        unsafe_allow_html=True
+    )
+
 if selected == 'DATASET':
     st.write("# DATASET")
     st.write("Pada halaman ini akan berisi tentang Informasi Dataset yang digunakan.")
@@ -49,17 +71,11 @@ if selected == 'DATASET':
         st.image('data/bmri.png')
         st.markdown(
             '<p style="text-align: justify;">'
-            'Grafik data terlihat berfluktuasi seiring waktu. dimana pada tahun 2020-2021 terjadi fluktuasi yang cukup signifikan.'
+            'Grafik data box plot'  
             '</p>',
             unsafe_allow_html=True
         )
         st.image('data/bmri_outlier.png')
-        st.markdown(
-            '<p style="text-align: justify;">'
-            'Grafik data box plot'
-            '</p>',
-            unsafe_allow_html=True
-        )
 
 if selected == 'MODELING':
     st.write("## Modelling")
@@ -202,11 +218,11 @@ if selected == 'MODELING':
 if selected == 'PREDIKSI':
     svm_model = load('data/model_SVM.pkl')
 
-    st.write("# Peramalan Inflasi")
-    st.warning("###### Remainder")
-    st.write("Pada halaman ini anda akan melakukan peramalan Inflasi dengan data masukan berupa Inflasi dari waktu sebelumnya. untuk informasi mengenai data Inflasi dapat melihat pada Menu BI dan memilih data histori Inflasi.")
+    st.write("# Prediksi Harga Saham")
+    # st.warning("###### Remainder")
+    st.write("Halaman ini anda akan melakukan prediksi harga saham BMRI dengan data masukan berupa data harga saham BMRI dari waktu sebelumnya")
 
-    st.info("Masukkan Data Inflasi")
+    st.info("Masukkan Data harga saham BMRI")
 
     col1,col2 = st.columns(2)
     with col1:
